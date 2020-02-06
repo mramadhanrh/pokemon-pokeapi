@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const baseURL = {
-  pokeapi: 'https://pokeapi.co/api/v2/'
+  pokeapi: 'https://pokeapi.co/api/v2'
 };
 
 const axiosInstance = axios.create({
@@ -25,7 +25,8 @@ axiosInstance.interceptors.response.use(response => response, handleResponseErro
 axiosInstance.interceptors.request.use(response => response, handleRequestError);
 
 const routes = {
-  pokemon: 'pokemon'
+  pokemonList: '/pokemon',
+  pokemonInfo: pokemonId => `/pokemon/${pokemonId}`
 };
 
 export default axiosInstance;

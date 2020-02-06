@@ -1,0 +1,9 @@
+.container {
+  background-color: whitesmoke;
+  padding: 10px;
+  border-radius: 5px;
+  margin: 5px 0;
+  font-weight: bold;
+  text-align: center;
+  border: 5px gray solid;
+}

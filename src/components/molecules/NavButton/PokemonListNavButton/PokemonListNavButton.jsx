@@ -9,10 +9,10 @@ const PokemonListNavButton = ({ onNextClick, onPreviousClick }) => {
   return (
     <div className={styles.nav}>
       <BoxButton className={styles.nav__button} onClick={onPreviousClick}>
-        Previous
+        <p>Previous</p>
       </BoxButton>
       <BoxButton className={styles.nav__button} onClick={onNextClick}>
-        Next
+        <p>Next</p>
       </BoxButton>
     </div>
   );

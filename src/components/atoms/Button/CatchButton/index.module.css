@@ -1,0 +1,27 @@
+.button {
+  margin: 30px 0;
+  width: 100%;
+  background-color: #f0134d;
+  color: #ffffff;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.button:disabled {
+  background-color: #ff4d7c;
+}
+
+.button__icon {
+  width: 25px;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 10px;
+}
+
+.button__text {
+  display: inline-block;
+  vertical-align: middle;
+}

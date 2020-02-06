@@ -1,7 +1,7 @@
 import axiosInstance, { routes } from './axiosInstance';
 
 const getPokemonList = (offset = 0, limit = 0) => {
-  return axiosInstance.get(`${routes.pokemon}`, {
+  return axiosInstance.get(`${routes.pokemonList}`, {
     params: {
       offset,
       limit
@@ -11,6 +11,10 @@ const getPokemonList = (offset = 0, limit = 0) => {
 
 const getPokemonInfoByUrl = url => {
   return axiosInstance.get(url);
+};
+
+const getPokemonInfoById = pokemonId => {
+  return axiosInstance.get(routes.pokemonInfo(pokemonId));
 };
 
 const getPokemonListWithThumb = (offset = 0, limit = 0) => {
@@ -39,4 +43,4 @@ const getPokemonListWithThumb = (offset = 0, limit = 0) => {
   });
 };
 
-export default { getPokemonList, getPokemonInfoByUrl, getPokemonListWithThumb };
+export default { getPokemonList, getPokemonInfoByUrl, getPokemonInfoById, getPokemonListWithThumb };
