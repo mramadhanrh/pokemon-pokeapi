@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
+import { compose } from 'redux';
 import CatchButton from '../../src/components/atoms/Button/CatchButton';
 import PokemonCard from '../../src/components/molecules/Card/PokemonCard';
 import MainHeader from '../../src/components/organisms/Headers/MainHeader';
@@ -8,13 +9,19 @@ import PokemonMovesList from '../../src/components/organisms/List/PokemonMovesLi
 import PokemonInfoTemplate from '../../src/components/templates/PokemonInfoTemplate';
 import withPokemonInfo from '../../src/components/hoc/withPokemonInfo';
 import CatchStatus from '../../src/components/atoms/Text/CatchStatus';
+import withCatchPokemon from '../../src/components/hoc/withCatchPokemon/withCatchPokemon';
+import AddPokemonModal from '../../src/components/organisms/Modal/AddPokemonModal';
 
-const Pokemon = ({ pokemonInfo }) => {
+const Pokemon = ({
+  pokemonInfo,
+  catching,
+  caught,
+  showFeedback,
+  showNicknameModal,
+  onCatchPokemon,
+  onNicknameSubmit
+}) => {
   if (Object.values(pokemonInfo).length === 0) return <p>Loading...</p>;
-
-  const [isCatching, setCatching] = useState(false);
-  const [isFeedback, setFeedback] = useState(false);
-  const [isCaught, setCaught] = useState(false);
 
   const {
     name,
@@ -27,45 +34,17 @@ const Pokemon = ({ pokemonInfo }) => {
     return types.map(({ type: { name: typeName } }) => typeName);
   };
 
-  const doCatchPokemon = () => {
-    return new Promise(resolve => {
-      setTimeout(() => {
-        const randNum = Math.round(Math.random());
-        resolve(!!randNum);
-      }, 2000);
-    });
-  };
-
-  const handlePokemonCatched = () => {};
-
-  const handleCatchPokemon = () => {
-    setCatching(true);
-    setCaught(false);
-
-    doCatchPokemon()
-      .then(isCatched => {
-        setCaught(isCatched);
-        if (isCatched) handlePokemonCatched();
-      })
-      .finally(() => {
-        setFeedback(true);
-        setTimeout(() => {
-          setCatching(false);
-          setFeedback(false);
-        }, 2000);
-      });
-  };
-
   return (
     <PokemonInfoTemplate header={<MainHeader />}>
+      <AddPokemonModal active={showNicknameModal} onSubmit={onNicknameSubmit} />
       <PokemonCard name={name} src={spriteSrc} typeList={getPokemonTypes()} />
       <CatchStatus
-        showFeedback={isFeedback}
-        catching={isCatching}
-        caught={isCaught}
+        catching={catching}
+        caught={caught}
+        showFeedback={showFeedback}
         pokemonName={name}
       />
-      <CatchButton onClick={handleCatchPokemon} disabled={isCatching} />
+      <CatchButton onClick={onCatchPokemon} disabled={catching} />
       <PokemonMovesList moveList={moves} />
     </PokemonInfoTemplate>
   );
@@ -79,11 +58,23 @@ Pokemon.propTypes = {
     }),
     types: PropTypes.arrayOf(PropTypes.shape({})),
     moves: PropTypes.arrayOf(PropTypes.shape({}))
-  })
+  }),
+  catching: PropTypes.bool,
+  caught: PropTypes.bool,
+  showFeedback: PropTypes.bool,
+  showNicknameModal: PropTypes.bool,
+  onCatchPokemon: PropTypes.func,
+  onNicknameSubmit: PropTypes.func
 };
 
 Pokemon.defaultProps = {
-  pokemonInfo: {}
+  pokemonInfo: {},
+  catching: false,
+  caught: false,
+  showFeedback: false,
+  showNicknameModal: false,
+  onCatchPokemon: () => {},
+  onNicknameSubmit: () => {}
 };
 
-export default withPokemonInfo(Pokemon);
+export default compose(withPokemonInfo, withCatchPokemon)(Pokemon);

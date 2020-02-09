@@ -1,0 +1,27 @@
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.75);
+}
+
+.modal__wrapper {
+  background-color: #ffffff;
+  margin: 20px;
+  border-radius: 5px;
+  animation: modalIn 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);
+  padding: 10px;
+}
+
+@keyframes modalIn {
+  from {
+    transform: translateY(-20%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0%);
+    opacity: 1;
+  }
+}
